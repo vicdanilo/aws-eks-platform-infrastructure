@@ -16,7 +16,7 @@ jobs:
         name: Checkout
         uses: actions/checkout@v4
         with:
-          repository: vicdanilo/noname
+          repository: vicdanilo/flatirons_test
           ref: main
           token: ${{ secrets.CLONE_TOKEN }}
       -
