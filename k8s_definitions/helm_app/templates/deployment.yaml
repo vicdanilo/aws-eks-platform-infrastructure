@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: app
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 3000
+          env:
+            - name: RAILS_ENV
+              value: {{ .Values.env.RAILS_ENV }}
+            - name: DATABASE_URL
+              value: postgres://app:{{ .Values.env.APP_DATABASE_PASSWORD | urlquery }}@{{ .Values.env.APP_DATABASE_HOST }}:5432/app_development
+            - name: APP_DATABASE_HOST
+              value: {{ .Values.env.APP_DATABASE_HOST }}
+            - name: APP_DATABASE_PASSWORD
+              value: {{ .Values.env.APP_DATABASE_PASSWORD }}

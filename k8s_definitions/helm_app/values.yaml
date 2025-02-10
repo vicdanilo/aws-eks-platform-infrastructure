@@ -1,0 +1,9 @@
+replicaCount: 1
+image:
+  repository: 183167903796.dkr.ecr.us-east-1.amazonaws.com/app
+  tag: latest
+  pullPolicy: Always
+env:
+  RAILS_ENV: development
+  APP_DATABASE_PASSWORD: o15tGQfmKcv]$Bpcyx*i|N5)yf1U
+  APP_DATABASE_HOST: db-use1-prod-eks-infra.cexqbgo1c3j7.us-east-1.rds.amazonaws.com
