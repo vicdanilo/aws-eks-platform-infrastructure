@@ -1,7 +1,5 @@
 ########################################
 # AWS DynamoDB resource module
-#
-# https://www.terraform.io/docs/providers/aws/r/dynamodb_table.html
 ########################################
 
 resource "aws_dynamodb_table" "this" {

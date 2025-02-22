@@ -82,4 +82,4 @@ deletion_protection                 = true
 ## ECR ##
 ecr_name                 = "app"
 ecr_image_tag_mutability = "MUTABLE"
-github_repository        = "vicdanilo/noname"
+github_repository        = "vicdanilo/flatirons_test"
