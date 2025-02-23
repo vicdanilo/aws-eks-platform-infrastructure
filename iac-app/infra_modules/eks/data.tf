@@ -28,8 +28,6 @@ EOT
   account_id               = data.aws_caller_identity.current.account_id
   aws_region               = data.aws_region.current.name
 
-  oidcId = element(split("/", module.eks_cluster.oidc_provider_arn), length(split("/", module.eks_cluster.oidc_provider_arn)) - 1)
-
   ##  bastion ##
   bastion_name = "${var.cluster_name}-bastion"
   bastion_sg   = "${var.cluster_name}-bastion-sg"

@@ -30,11 +30,10 @@ create_database_subnet_route_table = "true"
 ## Public Security Group ##
 public_ingress_with_cidr_blocks = []
 
-create_eks = true
-
 ########################################
 # EKS
 ########################################
+create_eks = true
 cluster_version                = 1.32
 cluster_endpoint_public_access = true # need this otherwise can't access EKS from outside VPC. Unless set up bastion
 
@@ -61,6 +60,7 @@ self_managed_node_groups = {
 ########################################
 # RDS
 ########################################
+create_rds                          = false
 engine                              = "postgres"
 engine_version                      = "14"
 db_name                             = "app_development"
@@ -79,7 +79,7 @@ deletion_protection                 = true
 ########################################
 # ECR
 ########################################
-## ECR ##
+create_ecr               = false
 ecr_name                 = "app"
 ecr_image_tag_mutability = "MUTABLE"
 github_repository        = "vicdanilo/flatirons_test"

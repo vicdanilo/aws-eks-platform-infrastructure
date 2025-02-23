@@ -17,19 +17,19 @@ locals {
     })
   )
 
-  # add three ingress rules from EKS worker SG to DB SG only when creating EKS cluster
-  databse_computed_ingress_with_eks_worker_source_security_group_ids = var.create_eks ? [
+  # add two ingress rules from EKS worker SG to DB SG only when creating EKS cluster
+  databse_computed_ingress_with_eks_worker_source_security_group_ids = [
     {
       rule                     = "postgresql-tcp"
-      source_security_group_id = module.eks.node_security_group_id
+      source_security_group_id = try(module.eks.node_security_group_id, null)
       description              = "postgresql from EKS SG in private subnet"
     },
     {
       rule                     = "redis-tcp"
-      source_security_group_id = module.eks.node_security_group_id
+      source_security_group_id = try(module.eks.node_security_group_id, null)
       description              = "redis from EKS SG in private subnet"
     },
-  ] : []
+  ]
 
   ########################################
   # EKS

@@ -4,47 +4,47 @@
 ################################################################################
 output "cluster_name" {
   description = "The name of the EKS cluster."
-  value       = module.eks_cluster.cluster_name
+  value       = try(module.eks_cluster[0].cluster_name, null)
 }
 
 output "cluster_id" {
   description = "The id of the EKS cluster."
-  value       = module.eks_cluster.cluster_id
+  value       = try(module.eks_cluster[0].cluster_id, null)
 }
 
 output "cluster_oidc_issuer_url" {
   description = "The URL on the EKS cluster for the OpenID Connect identity provider"
-  value       = module.eks_cluster.cluster_oidc_issuer_url
+  value       = try(module.eks_cluster[0].cluster_oidc_issuer_url, null)
 }
 
 output "cluster_arn" {
   description = "The Amazon Resource Name (ARN) of the cluster."
-  value       = module.eks_cluster.cluster_arn
+  value       = try(module.eks_cluster[0].cluster_arn, null)
 }
 
 output "cluster_certificate_authority_data" {
   description = "Nested attribute containing certificate-authority-data for your cluster. This is the base64 encoded certificate data required to communicate with your cluster."
-  value       = module.eks_cluster.cluster_certificate_authority_data
+  value       = try(module.eks_cluster[0].cluster_certificate_authority_data, null)
 }
 
 output "cluster_endpoint" {
   description = "The endpoint for your EKS Kubernetes API."
-  value       = module.eks_cluster.cluster_endpoint
+  value       = try(module.eks_cluster[0].cluster_endpoint, null)
 }
 
 output "cluster_version" {
   description = "The Kubernetes server version for the EKS cluster."
-  value       = module.eks_cluster.cluster_version
+  value       = try(module.eks_cluster[0].cluster_version, null)
 }
 
 output "cluster_platform_version" {
   description = "Platform version for the cluster"
-  value       = module.eks_cluster.cluster_platform_version
+  value       = try(module.eks_cluster[0].cluster_platform_version, null)
 }
 
 output "cluster_status" {
   description = "Status of the EKS cluster. One of `CREATING`, `ACTIVE`, `DELETING`, `FAILED`"
-  value       = module.eks_cluster.cluster_status
+  value       = try(module.eks_cluster[0].cluster_status, null)
 }
 
 ################################################################################
@@ -52,17 +52,17 @@ output "cluster_status" {
 ################################################################################
 output "cluster_primary_security_group_id" {
   description = "Cluster security group that was created by Amazon EKS for the cluster. Managed node groups use this security group for control-plane-to-data-plane communication. Referred to as 'Cluster security group' in the EKS console"
-  value       = module.eks_cluster.cluster_primary_security_group_id
+  value       = try(module.eks_cluster[0].cluster_primary_security_group_id, null)
 }
 
 output "cluster_security_group_arn" {
   description = "Amazon Resource Name (ARN) of the cluster security group"
-  value       = module.eks_cluster.cluster_security_group_arn
+  value       = try(module.eks_cluster[0].cluster_security_group_arn, null)
 }
 
 output "cluster_security_group_id" {
   description = "Security group ID attached to the EKS cluster."
-  value       = module.eks_cluster.cluster_security_group_id
+  value       = try(module.eks_cluster[0].cluster_security_group_id, null)
 }
 
 ################################################################################
@@ -70,12 +70,12 @@ output "cluster_security_group_id" {
 ################################################################################
 output "node_security_group_arn" {
   description = "Amazon Resource Name (ARN) of the node shared security group"
-  value       = module.eks_cluster.node_security_group_arn
+  value       = try(module.eks_cluster[0].node_security_group_arn, null)
 }
 
 output "node_security_group_id" {
   description = "ID of the node shared security group"
-  value       = module.eks_cluster.node_security_group_id
+  value       = try(module.eks_cluster[0].node_security_group_id, null)
 }
 
 ################################################################################
@@ -83,16 +83,16 @@ output "node_security_group_id" {
 ################################################################################
 output "oidc_provider" {
   description = "The OpenID Connect identity provider (issuer URL without leading `https://`)"
-  value       = module.eks_cluster.oidc_provider
+  value       = try(module.eks_cluster[0].oidc_provider, null)
 }
 output "oidc_provider_arn" {
   description = "The ARN of the OIDC Provider if `enable_irsa = true`"
-  value       = module.eks_cluster.oidc_provider_arn
+  value       = try(module.eks_cluster[0].oidc_provider_arn, null)
 }
 
 output "cluster_tls_certificate_sha1_fingerprint" {
   description = "The SHA1 fingerprint of the public key of the cluster's certificate"
-  value       = module.eks_cluster.cluster_tls_certificate_sha1_fingerprint
+  value       = try(module.eks_cluster[0].cluster_tls_certificate_sha1_fingerprint, null)
 }
 
 ################################################################################
@@ -100,17 +100,17 @@ output "cluster_tls_certificate_sha1_fingerprint" {
 ################################################################################
 output "cluster_iam_role_name" {
   description = "IAM role name of the EKS cluster."
-  value       = module.eks_cluster.cluster_iam_role_name
+  value       = try(module.eks_cluster[0].cluster_iam_role_name, null)
 }
 
 output "cluster_iam_role_arn" {
   description = "IAM role ARN of the EKS cluster."
-  value       = module.eks_cluster.cluster_iam_role_arn
+  value       = try(module.eks_cluster[0].cluster_iam_role_arn, null)
 }
 
 output "cluster_iam_role_unique_id" {
   description = "Stable and unique string identifying the IAM role"
-  value       = module.eks_cluster.cluster_iam_role_unique_id
+  value       = try(module.eks_cluster[0].cluster_iam_role_unique_id, null)
 }
 
 ################################################################################
@@ -119,7 +119,7 @@ output "cluster_iam_role_unique_id" {
 
 output "cluster_addons" {
   description = "Map of attribute maps for all EKS cluster addons enabled"
-  value       = module.eks_cluster.cluster_addons
+  value       = try(module.eks_cluster[0].cluster_addons, null)
 }
 
 ################################################################################
@@ -128,7 +128,7 @@ output "cluster_addons" {
 
 output "cluster_identity_providers" {
   description = "Map of attribute maps for all EKS identity providers enabled"
-  value       = module.eks_cluster.cluster_identity_providers
+  value       = try(module.eks_cluster[0].cluster_identity_providers, null)
 }
 
 ################################################################################
@@ -136,12 +136,12 @@ output "cluster_identity_providers" {
 ################################################################################
 output "cloudwatch_log_group_name" {
   description = "Name of cloudwatch log group created"
-  value       = module.eks_cluster.cloudwatch_log_group_name
+  value       = try(module.eks_cluster[0].cloudwatch_log_group_name, null)
 }
 
 output "cloudwatch_log_group_arn" {
   description = "Arn of cloudwatch log group created"
-  value       = module.eks_cluster.cloudwatch_log_group_arn
+  value       = try(module.eks_cluster[0].cloudwatch_log_group_arn, null)
 }
 
 ################################################################################
@@ -149,7 +149,7 @@ output "cloudwatch_log_group_arn" {
 ################################################################################
 output "fargate_profiles" {
   description = "Map of attribute maps for all EKS Fargate Profiles created"
-  value       = module.eks_cluster.fargate_profiles
+  value       = try(module.eks_cluster[0].fargate_profiles, null)
 }
 
 ################################################################################
@@ -158,12 +158,12 @@ output "fargate_profiles" {
 
 output "eks_managed_node_groups" {
   description = "Map of attribute maps for all EKS managed node groups created"
-  value       = module.eks_cluster.eks_managed_node_groups
+  value       = try(module.eks_cluster[0].eks_managed_node_groups, null)
 }
 
 output "eks_managed_node_groups_autoscaling_group_names" {
   description = "List of the autoscaling group names created by EKS managed node groups"
-  value       = module.eks_cluster.eks_managed_node_groups_autoscaling_group_names
+  value       = try(module.eks_cluster[0].eks_managed_node_groups_autoscaling_group_names, null)
 }
 
 ################################################################################
@@ -171,12 +171,12 @@ output "eks_managed_node_groups_autoscaling_group_names" {
 ################################################################################
 output "self_managed_node_groups" {
   description = "Map of attribute maps for all self managed node groups created"
-  value       = module.eks_cluster.self_managed_node_groups
+  value       = try(module.eks_cluster[0].self_managed_node_groups, null)
 }
 
 output "self_managed_node_groups_autoscaling_group_names" {
   description = "List of the autoscaling group names created by self-managed node groups"
-  value       = module.eks_cluster.self_managed_node_groups_autoscaling_group_names
+  value       = try(module.eks_cluster[0].self_managed_node_groups_autoscaling_group_names, null)
 }
 
 ################################################################################
@@ -184,5 +184,5 @@ output "self_managed_node_groups_autoscaling_group_names" {
 ################################################################################
 output "alb_controller_iam_role_name" {
   description = "IAM role name of the ALB Ingress Controller"
-  value       = aws_iam_role.AWSLoadBalancerControllerIAMRole.arn
+  value       = try(module.aws_alb_role[0].iam_role_arn, null)
 }

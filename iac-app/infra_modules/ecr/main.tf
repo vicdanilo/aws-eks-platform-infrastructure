@@ -1,4 +1,6 @@
 module "ecr" {
+  count = var.create_ecr ? 1 : 0
+
   source = "../../resource_modules/container/ecr"
 
   ## ECR repo ##
@@ -11,6 +13,8 @@ module "ecr" {
 }
 
 module "github-oidc" {
+  count = var.create_ecr && var.create_github_oidc ? 1 : 0
+
   source  = "terraform-module/github-oidc-provider/aws"
   version = "~> 2.0"
 
@@ -18,12 +22,14 @@ module "github-oidc" {
   create_oidc_role     = true
 
   repositories              = [var.github_repository]
-  oidc_role_attach_policies = [module.github-actions-policy.arn]
+  oidc_role_attach_policies = [try(module.github-actions-policy[0].arn, "")]
 
   tags = var.tags
 }
 
 module "github-actions-policy"  {
+  count = var.create_ecr && var.create_github_oidc ? 1 : 0
+
   source  = "terraform-aws-modules/iam/aws//modules/iam-policy"
   version = "~> 5.0"
 

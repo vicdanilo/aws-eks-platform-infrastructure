@@ -92,10 +92,6 @@ variable "bastion_sg_id" {
 }
 
 ## Database security group ##
-variable "create_eks" {}
-variable "databse_computed_ingress_with_db_controller_source_security_group_id" {
-  default = ""
-}
 variable "databse_computed_ingress_with_eks_worker_source_security_group_ids" {
   type = list(object({
     rule                     = string

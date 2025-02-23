@@ -1,4 +1,14 @@
 ## ECR ##
+variable "create_ecr" {
+  type    = bool
+  default = false
+}
+
+variable "create_github_oidc" {
+  type    = bool
+  default = true
+}
+
 variable "ecr_name" {
   type = string
   description = "Name of the repository"

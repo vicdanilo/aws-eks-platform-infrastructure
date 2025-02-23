@@ -6,6 +6,8 @@ module "key_pair" {
 }
 
 module "eks_cluster" {
+  count = var.create_eks ? 1 : 0
+
   source  = "terraform-aws-modules/eks/aws"
   version = "~> 20.33"
 
@@ -39,7 +41,7 @@ module "eks_cluster" {
   self_managed_node_group_defaults = {
     key_name = module.key_pair.key_name
 
-    iam_role_additional_policies = {ECRPullAcessPolicy = module.ecr_pull_policy.arn}
+    iam_role_additional_policies = {ECRPullAcessPolicy = try(module.ecr_pull_policy[0].arn, "")}
   }
 
   access_entries = {
@@ -116,6 +118,8 @@ module "eks_cluster" {
 
 
 module "ecr_pull_policy"  {
+  count = var.create_eks && var.create_ecr_pull_policy ? 1 : 0
+
   source  = "terraform-aws-modules/iam/aws//modules/iam-policy"
   version = "~> 5.0"
 

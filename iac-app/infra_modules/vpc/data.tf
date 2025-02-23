@@ -71,33 +71,6 @@ locals {
       source_security_group_id = module.private_security_group.security_group_id
       description              = "redis from private SG"
     },
-    # DB Controller EC2 not created yet
-    # {
-    #   rule                     = "mongodb-27017-tcp"
-    #   source_security_group_id = var.databse_computed_ingress_with_db_controller_source_security_group_id
-    #   description              = "mongodb-27017 from DB controller in private subnet"
-    # },
-    # {
-    #   rule                     = "mongodb-27018-tcp"
-    #   source_security_group_id = var.databse_computed_ingress_with_db_controller_source_security_group_id
-    #   description              = "mongodb-27018 from DB controller in private subnet"
-    # },
-    # {
-    #   rule                     = "mongodb-27019-tcp"
-    #   source_security_group_id = var.databse_computed_ingress_with_db_controller_source_security_group_id
-    #   description              = "mongodb-27019 from DB controller in private subnet"
-    # },
-    # {
-    #   rule                     = "mysql-tcp"
-    #   source_security_group_id = var.databse_computed_ingress_with_db_controller_source_security_group_id
-    #   description              = "mysql-3306 from DB Controller SG"
-    # },
-    # EKS SG not created yet
-    # {
-    #   rule                     = "mysql-tcp"
-    #   source_security_group_id = data.aws_security_group.eks_worker_sg.id
-    #   description              = "mysql-3306 from private SG in XXX-devops account"
-    # },
   ]
 }
 

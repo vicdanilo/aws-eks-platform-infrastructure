@@ -1,41 +1,40 @@
 # This configuration is for an Application Load Balancer (ALB)
 # Reference: https://docs.aws.amazon.com/eks/latest/userguide/lbc-helm.html
 
-resource "aws_iam_policy" "AWSLoadBalancerControllerIAMPolicy" {
-  name        = "AWSLoadBalancerControllerIAMPolicy"
+module "aws_alb_role" {
+  count = var.create_eks && var.create_alb_role ? 1 : 0
+
+  source  = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
+
+  create_role = true
+
+  role_name = "eks-loadbalancer-controller"
+
+  provider_url = try(module.eks_cluster[0].cluster_oidc_issuer_url, "")
+  oidc_fully_qualified_audiences = ["sts.amazonaws.com"]
+  oidc_fully_qualified_subjects = ["system:serviceaccount:kube-system:aws-load-balancer-controller"]
+
+  role_policy_arns = [
+    try(module.aws_load_balancer_controller_policy[0].arn, ""),
+  ]
+  number_of_role_policy_arns = 1
+
+  tags = merge(
+    {Role = "eks-loadbalancer-controller"},
+    var.tags
+  )
+}
+
+module "aws_load_balancer_controller_policy" {
+  count = var.create_eks && var.create_alb_role ? 1 : 0
+
+  source  = "terraform-aws-modules/iam/aws//modules/iam-policy"
+  version = "~> 5.0"
+
+  name = "AWSLoadBalancerControllerIAMPolicy"
   description = "Policy for AWS Load Balancer Controller"
-  policy      = file("${path.module}/alb_iam_policy.json")
-}
 
-data "aws_iam_policy_document" "trust_policy" {
-  statement {
-    actions = ["sts:AssumeRoleWithWebIdentity"]
+  policy = file("${path.module}/alb_iam_policy.json")
 
-    principals {
-      type        = "Federated"
-      identifiers = ["arn:aws:iam::${local.account_id}:oidc-provider/oidc.eks.${local.aws_region}.amazonaws.com/id/${local.oidcId}"]
-    }
-
-    condition {
-      test     = "StringEquals"
-      variable = "oidc.eks.us-east-1.amazonaws.com/id/${local.oidcId}:aud"
-      values   = ["sts.amazonaws.com"]
-    }
-
-    condition {
-      test     = "StringEquals"
-      variable = "oidc.eks.us-east-1.amazonaws.com/id/${local.oidcId}:sub"
-      values   = ["system:serviceaccount:kube-system:aws-load-balancer-controller"]
-    }
-  }
-}
-
-resource "aws_iam_role" "AWSLoadBalancerControllerIAMRole" {
-  name               = "eks-loadbalancer-controller"
-  assume_role_policy = data.aws_iam_policy_document.trust_policy.json
-}
-
-resource "aws_iam_role_policy_attachment" "attach_policy" {
-  role       = aws_iam_role.AWSLoadBalancerControllerIAMRole.name
-  policy_arn = aws_iam_policy.AWSLoadBalancerControllerIAMPolicy.arn
+  tags = var.tags
 }

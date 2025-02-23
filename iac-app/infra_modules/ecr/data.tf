@@ -36,7 +36,7 @@ data "aws_iam_policy_document" "github_oidc_policy" {
       "ecr:BatchCheckLayerAvailability",
       "ecr:PutImage"
     ]
-    resources = [module.ecr.arn]
+    resources = [try(module.ecr[0].arn, "")]
   }
 
   statement {
@@ -53,7 +53,7 @@ data "aws_iam_policy_document" "app_ecr_policy" {
 
     principals {
       type        = "AWS"
-      identifiers = [module.github-oidc.oidc_role]
+      identifiers = [try(module.github-oidc[0].oidc_role, "")]
     }
 
     actions = [
@@ -108,7 +108,7 @@ data "aws_iam_policy_document" "app_ecr_policy" {
     condition {
       test     = "ArnNotLike"
       variable = "aws:PrincipalArn"
-      values   = [module.github-oidc.oidc_role, var.worker_role_arn] 
+      values   = [try(module.github-oidc[0].oidc_role, ""), var.worker_role_arn] 
     }
   }
 }

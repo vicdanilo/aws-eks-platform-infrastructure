@@ -109,7 +109,7 @@ module "database_security_group" {
     local.db_security_group_computed_ingress_with_source_security_group_id
     , var.databse_computed_ingress_with_eks_worker_source_security_group_ids
   )
-  number_of_computed_ingress_with_source_security_group_id = var.create_eks ? 4 : 2
+  number_of_computed_ingress_with_source_security_group_id = 4
 
   # Open for self (rule or from_port+to_port+protocol+description)
   ingress_with_self = [

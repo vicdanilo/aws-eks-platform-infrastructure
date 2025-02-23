@@ -123,10 +123,6 @@ variable "public_ingress_with_cidr_blocks" {
 }
 
 ## Database security group ##
-variable "create_eks" {}
-variable "databse_computed_ingress_with_db_controller_source_security_group_id" {
-  default = ""
-}
 variable "databse_computed_ingress_with_eks_worker_source_security_group_ids" {
   type = list(object({
     rule                     = string
@@ -145,6 +141,12 @@ variable "access_entries" {
   type        = any
   default     = {}
 }
+
+variable "create_eks" {
+  type    = bool
+  default = false
+}
+
 variable "create_kms_key" {
   description = "Controls if a KMS key for cluster encryption should be created"
   type        = bool
@@ -204,6 +206,11 @@ variable "engine_version" {
   description = "The engine version to use"
   type        = string
   default     = null
+}
+
+variable "create_rds" {
+  type    = bool
+  default = false
 }
 
 variable "instance_class" {
@@ -300,6 +307,11 @@ variable "create_monitoring_role" {
 ########################################
 # ECR
 ########################################
+variable "create_ecr" {
+  type    = bool
+  default = false
+}
+
 variable "ecr_name" {
   type        = string
   description = "Name of the repository"

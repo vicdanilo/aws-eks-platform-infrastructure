@@ -4,7 +4,22 @@ variable "access_entries" {
   type        = any
   default     = {}
 }
-variable "create_eks" {}
+variable "create_eks" {
+  type       = bool
+  default    = true
+}
+
+variable "create_alb_role" {
+  type    = bool
+  default = true
+}
+
+variable "create_ecr_pull_policy" {
+  description = "Controls if a ECR pull policy should be created"
+  type        = bool
+  default     = true
+}
+
 variable "create_kms_key" {
   description = "Controls if a KMS key for cluster encryption should be created"
   type        = bool

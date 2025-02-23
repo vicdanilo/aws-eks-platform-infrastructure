@@ -26,9 +26,6 @@ module "vpc" {
   # bastion_sg_id  = module.bastion.security_group_id
 
   ## Database security group ##
-  # databse_computed_ingress_with_db_controller_source_security_group_id = module.db_controller_instance.security_group_id
-  create_eks = var.create_eks
-
   # pass EKS worker SG to DB SG after creating EKS module at composition layer
   databse_computed_ingress_with_eks_worker_source_security_group_ids = local.databse_computed_ingress_with_eks_worker_source_security_group_ids
 
@@ -63,7 +60,7 @@ module "eks" {
   access_entries = local.access_entries
 
   ## bastion ##
-  bastion_sg   = module.vpc.private_security_group_id
+  bastion_sg = module.vpc.private_security_group_id
 
   ## Common tag metadata ##
   env      = var.env
@@ -78,8 +75,9 @@ module "eks" {
 ########################################
 
 module "db_instance" {
-  source  = "terraform-aws-modules/rds/aws" #CHANFGEEEEE
-  version = "~> 6.10"
+  source = "../../../../infra_modules/rds"
+
+  create_rds = var.create_rds
 
   ## RDS ##
   identifier = local.db_name
@@ -120,14 +118,16 @@ module "db_instance" {
 module "ecr" {
   source = "../../../../infra_modules/ecr"
 
+  create_ecr = var.create_ecr
+
   ## ECR repo ##
   ecr_name                 = var.ecr_name
   ecr_image_tag_mutability = var.ecr_image_tag_mutability
-  worker_role_arn          = module.eks.self_managed_node_groups.prod.iam_role_arn
+  worker_role_arn          = try(module.eks.self_managed_node_groups.prod.iam_role_arn, "")
 
   ## For OIDC ##
   github_repository = var.github_repository
-  
+
   tags = local.tags
 }
 

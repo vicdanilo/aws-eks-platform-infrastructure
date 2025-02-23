@@ -1,4 +1,6 @@
 module "db_instance" {
+  count = var.create_rds ? 1 : 0
+  
   source = "terraform-aws-modules/rds/aws"
   version = "~> 6.10"
 
@@ -27,7 +29,7 @@ module "db_instance" {
   # IAM, security and networking
   iam_database_authentication_enabled = var.iam_database_authentication_enabled
   deletion_protection                 = var.deletion_protection
-  vpc_security_group_ids              = [aws_security_group.rds_sg[0].id]
+  vpc_security_group_ids              = var.vpc_security_group_ids
   db_subnet_group_name                = var.db_subnet_group_name
 
   options = var.options

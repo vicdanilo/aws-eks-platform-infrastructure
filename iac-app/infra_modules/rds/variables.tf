@@ -1,4 +1,9 @@
 ## rds ##
+variable "create_rds" {
+  type    = bool
+  default = false
+}
+
 variable "identifier" {
   description = "The name of the RDS instance"
   type        = string
