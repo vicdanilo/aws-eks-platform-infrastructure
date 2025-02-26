@@ -293,14 +293,6 @@ output "eks_self_managed_node_groups_autoscaling_group_names" {
 }
 
 ################################################################################
-# ALB
-################################################################################
-output "alb_controller_iam_role_name" {
-  description = "IAM role name of the ALB Ingress Controller"
-  value       = module.eks.alb_controller_iam_role_name
-}
-
-################################################################################
 # ECR
 ################################################################################
 output "ecr_arn" {

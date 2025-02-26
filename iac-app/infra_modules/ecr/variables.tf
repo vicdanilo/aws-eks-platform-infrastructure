@@ -10,17 +10,17 @@ variable "create_github_oidc" {
 }
 
 variable "ecr_name" {
-  type = string
+  type        = string
   description = "Name of the repository"
 }
 
 variable "ecr_image_tag_mutability" {
-  type = string
+  type        = string
   description = "The tag mutability setting for the repository. Must be one of: MUTABLE or IMMUTABLE. Defaults to MUTABLE."
 }
 
 variable "tags" {
-  type = map(string)
+  type        = map(string)
   description = "Tags to apply to the ECR Repository."
 }
 

@@ -178,11 +178,3 @@ output "self_managed_node_groups_autoscaling_group_names" {
   description = "List of the autoscaling group names created by self-managed node groups"
   value       = try(module.eks_cluster[0].self_managed_node_groups_autoscaling_group_names, null)
 }
-
-################################################################################
-# ALB
-################################################################################
-output "alb_controller_iam_role_name" {
-  description = "IAM role name of the ALB Ingress Controller"
-  value       = try(module.aws_alb_role[0].iam_role_arn, null)
-}

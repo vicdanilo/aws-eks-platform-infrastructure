@@ -27,10 +27,10 @@ module "eks_cluster" {
   subnet_ids = var.subnets
 
   cluster_addons = {
-      # coredns = {}
-      kube-proxy = {}
-      vpc-cni = {}
-      eks-pod-identity-agent = {}
+    # coredns = {}
+    kube-proxy             = {}
+    vpc-cni                = {}
+    eks-pod-identity-agent = {}
   }
 
   # Self Managed Node Group(s)
@@ -41,7 +41,7 @@ module "eks_cluster" {
   self_managed_node_group_defaults = {
     key_name = module.key_pair.key_name
 
-    iam_role_additional_policies = {ECRPullAcessPolicy = try(module.ecr_pull_policy[0].arn, "")}
+    iam_role_additional_policies = { ECRPullAcessPolicy = try(module.ecr_pull_policy[0].arn, "") }
   }
 
   access_entries = {
@@ -117,7 +117,7 @@ module "eks_cluster" {
 # }
 
 
-module "ecr_pull_policy"  {
+module "ecr_pull_policy" {
   count = var.create_eks && var.create_ecr_pull_policy ? 1 : 0
 
   source  = "terraform-aws-modules/iam/aws//modules/iam-policy"

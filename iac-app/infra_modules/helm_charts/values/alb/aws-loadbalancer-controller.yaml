@@ -1,0 +1,6 @@
+clusterName: "${cluster_name}"
+serviceAccount:
+  create: true
+  name: "${alb_svc_name}"
+  annotations:
+    eks.amazonaws.com/role-arn: "${alb_svc_role}"

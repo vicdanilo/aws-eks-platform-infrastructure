@@ -5,11 +5,6 @@ variable "access_entries" {
   default     = {}
 }
 variable "create_eks" {
-  type       = bool
-  default    = true
-}
-
-variable "create_alb_role" {
   type    = bool
   default = true
 }
@@ -109,7 +104,7 @@ variable "cluster_log_retention_in_days" {
 
 ## bastion ##
 variable "bastion_sg" {
-  type = string
+  type        = string
   description = "ID of the private security group"
 }
 

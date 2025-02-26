@@ -1,4 +1,0 @@
-clusterName: eks-use1-prod-eks-infra
-serviceAccount:
-  create: false
-  name: aws-load-balancer-controller

@@ -2,15 +2,15 @@ locals {
   ## VPC ##  
   public_subnet_tags = {
     # need to tag subnets with "shared" so K8s can find right subnets to create ELBs
-    "Tier" = "public"
+    "Tier"                   = "public"
     "kubernetes.io/role/elb" = 1
   }
 
   # need tag for internal-elb to be able to create ELB
   private_subnet_tags = {
 
-    "Tier" = "private"
-    "karpenter.sh/discovery" = "${var.cluster_name}"
+    "Tier"                            = "private"
+    "karpenter.sh/discovery"          = "${var.cluster_name}"
     "kubernetes.io/role/internal-elb" = 1
   }
 

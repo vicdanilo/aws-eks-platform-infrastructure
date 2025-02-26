@@ -91,7 +91,7 @@ data "aws_iam_policy_document" "app_ecr_policy" {
 
     principals {
       type        = "AWS"
-      identifiers = ["*"]  
+      identifiers = ["*"]
     }
 
     actions = [
@@ -108,7 +108,7 @@ data "aws_iam_policy_document" "app_ecr_policy" {
     condition {
       test     = "ArnNotLike"
       variable = "aws:PrincipalArn"
-      values   = [try(module.github-oidc[0].oidc_role, ""), var.worker_role_arn] 
+      values   = [try(module.github-oidc[0].oidc_role, ""), var.worker_role_arn]
     }
   }
 }

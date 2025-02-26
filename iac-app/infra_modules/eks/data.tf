@@ -4,7 +4,7 @@ locals {
 
   public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEIWqqhEWd8e0VQKsZel3nbvHXBxclFcwW6AVqKzPq6h test@test.com"
 
-    lifecycle_policy = <<EOT
+  lifecycle_policy = <<EOT
 {
   "rules": [
     {
@@ -25,8 +25,8 @@ locals {
 EOT
 
   ## ALB ##
-  account_id               = data.aws_caller_identity.current.account_id
-  aws_region               = data.aws_region.current.name
+  account_id = data.aws_caller_identity.current.account_id
+  aws_region = data.aws_region.current.name
 
   ##  bastion ##
   bastion_name = "${var.cluster_name}-bastion"

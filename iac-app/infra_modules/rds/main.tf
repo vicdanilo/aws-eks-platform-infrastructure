@@ -1,7 +1,7 @@
 module "db_instance" {
   count = var.create_rds ? 1 : 0
-  
-  source = "terraform-aws-modules/rds/aws"
+
+  source  = "terraform-aws-modules/rds/aws"
   version = "~> 6.10"
 
   identifier = var.identifier

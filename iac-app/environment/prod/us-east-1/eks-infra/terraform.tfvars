@@ -33,7 +33,7 @@ public_ingress_with_cidr_blocks = []
 ########################################
 # EKS
 ########################################
-create_eks = true
+create_eks                     = true
 cluster_version                = 1.32
 cluster_endpoint_public_access = true # need this otherwise can't access EKS from outside VPC. Unless set up bastion
 
